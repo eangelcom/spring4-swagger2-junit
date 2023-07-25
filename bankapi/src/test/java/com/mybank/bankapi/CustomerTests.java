@@ -92,7 +92,7 @@ public class CustomerTests {
 		BufferedWriter bw = null;
 		FileWriter fw = null;
 		try {
-			fw = new FileWriter("swagger/"+fileName);
+			fw = new FileWriter("../"+fileName);
 			bw = new BufferedWriter(fw);
 			bw.write(content);
 		} catch (IOException e) {
