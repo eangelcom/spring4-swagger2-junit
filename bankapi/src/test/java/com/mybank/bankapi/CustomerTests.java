@@ -16,6 +16,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.mybank.bankapi.model.Customer;
 import com.mybank.bankapi.web.dto.LoginRequestDto;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CustomerTests {
@@ -64,6 +69,47 @@ public class CustomerTests {
 		ResponseEntity<String> result2 = trt.getForEntity(API_URI+"/321/get", String.class);
 		Assert.assertEquals(HttpStatus.OK.value(), result2.getStatusCodeValue());
 	}
-	
+
+	@Test
+	public void testHome() throws Exception {
+
+		String swagger = trt.getForObject("/v2/api-docs", String.class);
+
+		writeFile("swagger.json", swagger );
+	}
+
+	public void writeFile(String fileName, String content) {
+
+		File theDir = new File("swagger");
+
+		if (!theDir.exists()) {
+			try{
+				theDir.mkdir();
+			}
+			catch(SecurityException se){ }
+		}
+
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter("swagger/"+fileName);
+			bw = new BufferedWriter(fw);
+			bw.write(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (bw != null)
+					bw.close();
+				if (fw != null)
+					fw.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+
+		}
+
+	}
+
 }
 
