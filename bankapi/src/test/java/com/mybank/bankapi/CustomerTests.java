@@ -78,7 +78,7 @@ public class CustomerTests {
 		writeFile("swagger.json", swagger );
 	}
 
-	public void writeFile(String fileName, String content) {
+	private void writeFile(String fileName, String content) {
 
 		File theDir = new File("swagger");
 
